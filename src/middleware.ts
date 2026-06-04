@@ -36,14 +36,40 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  // Protect /dashboard routes: redirect anonymous users to login
-  if (pathname.startsWith("/dashboard") && !user) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
+  // Anonymous user: redirect to login if attempting to access protected routes
+  if (!user) {
+    if (pathname.startsWith("/dashboard") || pathname === "/onboarding") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      return NextResponse.redirect(url);
+    }
+    return supabaseResponse;
   }
 
-  // Prevent logged-in users from accessing the login page: redirect to dashboard
+  // Logged-in user:
+  if (pathname.startsWith("/dashboard") || pathname === "/onboarding") {
+    const { data: workspace } = await supabase
+      .from("workspaces")
+      .select("id")
+      .limit(1)
+      .maybeSingle();
+
+    const hasWorkspace = !!workspace;
+
+    if (!hasWorkspace && pathname.startsWith("/dashboard")) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/onboarding";
+      return NextResponse.redirect(url);
+    }
+
+    if (hasWorkspace && pathname === "/onboarding") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/dashboard";
+      return NextResponse.redirect(url);
+    }
+  }
+
+  // Prevent logged-in users from accessing the login page
   if (pathname === "/login" && user) {
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
