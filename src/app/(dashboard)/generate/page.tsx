@@ -85,7 +85,7 @@ export default function GenerateSequencePage() {
         throw new Error(data.error || "Failed to generate sequence.");
       }
 
-      router.push(`/dashboard/sequences/${data.sequenceId}`);
+      router.push(`/sequences/${data.sequenceId}`);
     } catch (err) {
       setErrorMsg(
         err instanceof Error ? err.message : "Generation failed. Please try again."
