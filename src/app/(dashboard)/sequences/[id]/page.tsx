@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import ExportButton from "./ExportButton";
 
 export default async function SequenceDetailPage({
   params,
@@ -74,15 +75,11 @@ export default async function SequenceDetailPage({
           </div>
 
           <div className="flex items-center gap-3">
-            <button
-              disabled
-              className="px-5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-500 font-medium text-sm cursor-not-allowed flex items-center gap-2"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              <span>Export HTML</span>
-            </button>
+            <ExportButton
+              sequenceId={sequence.id}
+              sequenceName={sequence.name}
+              emailsCount={emails?.length || 0}
+            />
           </div>
         </div>
       </div>
