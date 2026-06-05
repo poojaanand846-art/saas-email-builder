@@ -4,6 +4,3 @@ Disallow: /dashboard
 Disallow: /api
 Disallow: /sequences
 Disallow: /generate
-Disallow: /onboarding
-
-Sitemap: https://designmails.com/sitemap.xml
