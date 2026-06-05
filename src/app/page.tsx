@@ -112,9 +112,9 @@ export default async function Home() {
               <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400 mb-6">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">Boring "Welcome" Emails</h3>
+              <h3 className="text-xl font-bold text-white mb-3">Boring &quot;Welcome&quot; Emails</h3>
               <p className="text-slate-400 leading-relaxed">
-                Sending generic "Thanks for signing up" emails that get zero opens and zero clicks.
+                Sending generic &quot;Thanks for signing up&quot; emails that get zero opens and zero clicks.
               </p>
             </div>
 
@@ -122,9 +122,9 @@ export default async function Home() {
               <div className="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400 mb-6">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" /></svg>
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">The "Ghost Town" Trial</h3>
+              <h3 className="text-xl font-bold text-white mb-3">The &quot;Ghost Town&quot; Trial</h3>
               <p className="text-slate-400 leading-relaxed">
-                Users sign up, get confused, and never log back in because you didn't guide them to the "Aha!" moment.
+                Users sign up, get confused, and never log back in because you didn&apos;t guide them to the &quot;Aha!&quot; moment.
               </p>
             </div>
           </div>
@@ -179,7 +179,7 @@ export default async function Home() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              What's inside your 7-day sequence?
+              What&apos;s inside your 7-day sequence?
             </h2>
           </div>
 
