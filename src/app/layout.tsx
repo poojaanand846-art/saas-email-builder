@@ -14,8 +14,13 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "EmailBuilder.ai | AI-Powered SaaS Onboarding Email Sequence Generator",
-  description: "Generate customized 7-day SaaS onboarding email sequences with Google Gemini 2.5 Flash, manage campaigns, and send test sequences with Resend.",
+  title: "SaaS Email Builder — AI onboarding emails in 60 seconds",
+  description: "Describe your SaaS and get 7 AI-written onboarding emails instantly. Export HTML or connect your ESP.",
+  openGraph: {
+    title: "SaaS Email Builder — AI onboarding emails in 60 seconds",
+    description: "Describe your SaaS and get 7 AI-written onboarding emails instantly. Export HTML or connect your ESP.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
