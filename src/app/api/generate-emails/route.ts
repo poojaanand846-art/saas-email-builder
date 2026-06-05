@@ -47,7 +47,7 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, "");
 }
 
-interface ClaudeEmail {
+interface GeminiEmail {
   day_offset: number;
   subject: string;
   preview_text: string;
@@ -164,8 +164,9 @@ export async function POST(request: Request) {
 
     if (!geminiResponse.ok) {
       const errorText = await geminiResponse.text();
+      console.error("Gemini API error:", geminiResponse.status, errorText);
       return NextResponse.json(
-        { error: `Gemini API returned an error: ${errorText}` },
+        { error: "AI generation failed. Please try again later." },
         { status: 502 }
       );
     }
@@ -189,7 +190,7 @@ export async function POST(request: Request) {
         .trim();
     }
 
-    let parsedEmails: ClaudeEmail[];
+    let parsedEmails: GeminiEmail[];
     try {
       parsedEmails = JSON.parse(textOutput);
     } catch {

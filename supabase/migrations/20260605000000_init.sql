@@ -64,10 +64,35 @@ ALTER TABLE esp_connections ENABLE ROW LEVEL SECURITY;
 ALTER TABLE exports ENABLE ROW LEVEL SECURITY;
 ALTER TABLE audit_logs ENABLE ROW LEVEL SECURITY;
 
--- RLS policies — users only see their own rows
-CREATE POLICY "own workspaces" ON workspaces USING (auth.uid() = user_id);
-CREATE POLICY "own sequences" ON sequences USING (auth.uid() = user_id);
-CREATE POLICY "own emails" ON emails USING (auth.uid() = user_id);
-CREATE POLICY "own esp" ON esp_connections USING (auth.uid() = user_id);
-CREATE POLICY "own exports" ON exports USING (auth.uid() = user_id);
-CREATE POLICY "own logs" ON audit_logs USING (auth.uid() = user_id);
+-- RLS policies — explicit per-operation for defense-in-depth
+-- Workspaces
+CREATE POLICY "workspaces_select" ON workspaces FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "workspaces_insert" ON workspaces FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "workspaces_update" ON workspaces FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "workspaces_delete" ON workspaces FOR DELETE USING (auth.uid() = user_id);
+
+-- Sequences
+CREATE POLICY "sequences_select" ON sequences FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "sequences_insert" ON sequences FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "sequences_update" ON sequences FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "sequences_delete" ON sequences FOR DELETE USING (auth.uid() = user_id);
+
+-- Emails
+CREATE POLICY "emails_select" ON emails FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "emails_insert" ON emails FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "emails_update" ON emails FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "emails_delete" ON emails FOR DELETE USING (auth.uid() = user_id);
+
+-- ESP Connections
+CREATE POLICY "esp_select" ON esp_connections FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "esp_insert" ON esp_connections FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "esp_update" ON esp_connections FOR UPDATE USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "esp_delete" ON esp_connections FOR DELETE USING (auth.uid() = user_id);
+
+-- Exports
+CREATE POLICY "exports_select" ON exports FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "exports_insert" ON exports FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+-- Audit Logs
+CREATE POLICY "audit_select" ON audit_logs FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "audit_insert" ON audit_logs FOR INSERT WITH CHECK (auth.uid() = user_id);

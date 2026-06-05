@@ -393,7 +393,7 @@ export default function EditorForm({ email }: EditorFormProps) {
               <iframe
                 title="Email Template Live Preview"
                 srcDoc={previewSrcDoc}
-                sandbox="allow-same-origin"
+                sandbox=""
                 className={`w-full h-full border-0 bg-white ${
                   viewportMode === "mobile" ? "pt-4" : ""
                 }`}

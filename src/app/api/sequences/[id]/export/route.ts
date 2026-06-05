@@ -81,11 +81,22 @@ export async function GET(
       const stageName = stages[idx] || `step-${idx + 1}`;
       const filename = `day-${email.day_offset}-${stageName}.html`;
 
+      // Escape HTML special chars to prevent XSS when opening exported files
+      const escapeHtml = (str: string) =>
+        str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+
+      const safeSubject = escapeHtml(email.subject);
+
       const fullHtml = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>${email.subject}</title>
+  <title>${safeSubject}</title>
 </head>
 <body>
   ${email.body_html}

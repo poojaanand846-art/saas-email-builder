@@ -92,7 +92,7 @@ export default async function DashboardPage() {
           </div>
           <h2 className="text-xl font-bold text-white">No email sequences generated</h2>
           <p className="text-sm text-slate-400 mt-2 leading-relaxed">
-            Create an onboarding sequence customized for your SaaS brand using Claude AI.
+            Create an onboarding sequence customized for your SaaS brand using Gemini AI.
           </p>
           <Link
             href="/generate"
