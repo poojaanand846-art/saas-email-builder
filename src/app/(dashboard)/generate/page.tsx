@@ -129,9 +129,9 @@ export default function GenerateSequencePage() {
               </div>
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white">Claude is writing your emails...</h3>
+              <h3 className="text-lg font-bold text-white">Gemini is writing your emails...</h3>
               <p className="text-sm text-slate-400 mt-2 leading-relaxed">
-                Writing 7 conversion-optimized onboarding emails matching your brand&apos;s voice and product highlights. This takes about 10-15 seconds.
+                Writing 7 conversion-optimized onboarding emails matching your brand&apos;s voice and product highlights. This takes about 5-10 seconds.
               </p>
             </div>
           </div>
@@ -149,7 +149,7 @@ export default function GenerateSequencePage() {
           </div>
           <div>
             <h2 className="text-xl font-bold text-white tracking-tight">Generate Email Sequence</h2>
-            <p className="text-xs text-slate-400">Powered by Anthropic Claude 3.5 Sonnet</p>
+            <p className="text-xs text-slate-400">Powered by Google Gemini 2.5 Flash</p>
           </div>
         </div>
 
