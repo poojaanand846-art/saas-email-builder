@@ -4,41 +4,27 @@ import Link from "next/link";
 
 export default async function Home() {
   const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
-  if (user) {
-    redirect("/dashboard");
+  // Try to retrieve user session to redirect to dashboard if logged in
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+      redirect("/dashboard");
+    }
+  } catch {
+    // Session fetching failed or not available during build. Let it render.
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-indigo-500/30 selection:text-indigo-200 overflow-x-hidden font-sans relative">
-      {/* Background Decorative Gradients */}
-      <div className="absolute top-[-10%] left-[-20%] w-[80%] h-[60%] rounded-full bg-indigo-900/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-20%] w-[80%] h-[60%] rounded-full bg-violet-900/10 blur-[120px] pointer-events-none" />
-      <div className="absolute top-[30%] right-[10%] w-[40%] h-[40%] rounded-full bg-blue-900/5 blur-[100px] pointer-events-none" />
-
-      {/* Header / Navbar */}
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 overflow-x-hidden">
+      
+      {/* 1. NAVBAR */}
       <header className="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-600/30">
-              <svg
-                className="w-5 h-5 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 19v-8.93a2 2 0 01.89-1.664l8-5.333a2 2 0 012.22 0l8 5.333A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-2.25-1.5a2 2 0 00-2.22 0l-2.25 1.5"
-                />
-              </svg>
-            </div>
-            <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+            <span className="text-xl font-bold tracking-tight text-white">
               EmailBuilder.ai
             </span>
           </div>
@@ -48,38 +34,32 @@ export default async function Home() {
               href="/login"
               className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
             >
-              Sign In
+              Sign in
             </Link>
             <Link
               href="/login"
-              className="text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-xl transition-all shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20"
+              className="text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-xl transition-all shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20"
             >
-              Get Started
+              Get started free
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* 2. HERO */}
       <section className="relative pt-20 pb-24 md:pt-32 md:pb-40 px-6">
-        <div className="max-w-5xl mx-auto text-center flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-semibold mb-8 tracking-wide">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-            Powered by Google Gemini 2.5 Flash
-          </div>
+        {/* Background Decorative Gradients */}
+        <div className="absolute top-[-10%] left-[-20%] w-[80%] h-[60%] rounded-full bg-indigo-900/10 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-20%] w-[80%] h-[60%] rounded-full bg-violet-900/10 blur-[120px] pointer-events-none" />
 
+        <div className="max-w-5xl mx-auto text-center flex flex-col items-center">
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-4xl leading-tight">
-            Create High-Converting Onboarding{" "}
-            <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
-              Email Sequences
-            </span>{" "}
-            in Seconds.
+            Your SaaS onboarding emails — written by AI in 60 seconds
           </h1>
 
           <p className="mt-6 text-lg sm:text-xl text-slate-400 max-w-2xl leading-relaxed">
-            Generate customized 7-day SaaS onboarding email campaigns tailored to
-            your product. Boost activation rates and save hours of manual
-            writing.
+            Describe your product. Get 7 professional onboarding emails instantly.
+            Edit, export, and send — no copywriter needed.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center w-full max-w-md">
@@ -87,144 +67,230 @@ export default async function Home() {
               href="/login"
               className="w-full sm:w-auto text-center px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/20 transition-all text-base"
             >
-              Start Generating for Free
+              Generate my emails free
             </Link>
             <a
-              href="#features"
+              href="#how-it-works"
               className="w-full sm:w-auto text-center px-8 py-4 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 font-semibold rounded-xl transition-all text-base"
             >
-              Explore Features
+              See how it works
             </a>
+          </div>
+
+          {/* Screenshot Placeholder */}
+          <div className="mt-16 w-full max-w-4xl aspect-[16/9] bg-slate-900/50 border border-slate-900 rounded-2xl flex items-center justify-center p-4 shadow-2xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 to-transparent pointer-events-none" />
+            <div className="text-center space-y-2">
+              <svg
+                className="w-12 h-12 text-slate-700 mx-auto"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              <span className="text-sm font-medium text-slate-500 block">
+                Dashboard Screenshot Preview
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
+      {/* 3. HOW IT WORKS */}
       <section
-        id="features"
-        className="py-24 px-6 border-t border-slate-900 bg-slate-950/50 relative"
+        id="how-it-works"
+        className="py-24 px-6 border-t border-slate-900 bg-slate-950/50"
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Write, Optimize, and Track Onboarding Emails
+              How it works
             </h2>
             <p className="mt-4 text-slate-400">
-              Everything you need to set up product onboarding campaigns that
-              engage and convert users.
+              Set up your onboarding campaign in three simple steps.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-8 hover:border-indigo-500/50 transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center mb-6 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {/* Step 1 */}
+            <div className="space-y-4">
+              <div className="w-10 h-10 rounded-lg bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-lg">
+                1
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">
-                AI-Powered Copies
-              </h3>
+              <h3 className="text-lg font-bold text-white">Describe your SaaS</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Utilize Google Gemini 2.5 Flash to automatically draft engaging
-                copy adapted for your specific onboarding steps, user persona, and
-                product tone.
+                Tell us what your product does in 2-3 sentences
               </p>
             </div>
 
-            {/* Feature 2 */}
-            <div className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-8 hover:border-violet-500/50 transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-xl bg-violet-600/10 border border-violet-500/20 flex items-center justify-center mb-6 text-violet-400 group-hover:bg-violet-600 group-hover:text-white transition-all">
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+            {/* Step 2 */}
+            <div className="space-y-4">
+              <div className="w-10 h-10 rounded-lg bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-lg">
+                2
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">
-                7-Day Automated Flow
-              </h3>
+              <h3 className="text-lg font-bold text-white">AI writes your emails</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Generate a full campaign layout specifying send-delay offsets (Day
-                1, Day 3, Day 5, etc.) to prompt actions at high-impact moments.
+                Get a complete 7-email onboarding sequence in under 60 seconds
               </p>
             </div>
 
-            {/* Feature 3 */}
-            <div className="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-8 hover:border-pink-500/50 transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-xl bg-pink-600/10 border border-pink-500/20 flex items-center justify-center mb-6 text-pink-400 group-hover:bg-pink-600 group-hover:text-white transition-all">
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"
-                  />
-                </svg>
+            {/* Step 3 */}
+            <div className="space-y-4">
+              <div className="w-10 h-10 rounded-lg bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-lg">
+                3
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">
-                Campaign Dashboards
-              </h3>
+              <h3 className="text-lg font-bold text-white">Edit and export</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Track generated email sequences, review copies side-by-side, send
-                test emails using Resend Integration, and refine templates in a
-                slick timeline layout.
+                Customise any email, then download HTML or push to Mailchimp, Brevo
+                and more
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-900 py-12 px-6 bg-slate-950">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="w-7 h-7 bg-indigo-600 rounded flex items-center justify-center text-white font-bold text-sm">
-              E
+      {/* 4. WHAT YOU GET */}
+      <section className="py-24 px-6 border-t border-slate-900 bg-slate-950">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              What you get
+            </h2>
+          </div>
+
+          <ul className="space-y-6 bg-slate-900/40 border border-slate-900 rounded-2xl p-8 md:p-10">
+            <li className="flex items-start gap-4 text-base md:text-lg">
+              <span className="text-indigo-400 shrink-0 text-xl">✅</span>
+              <span className="text-slate-200">
+                7 professionally written onboarding emails
+              </span>
+            </li>
+            <li className="flex items-start gap-4 text-base md:text-lg">
+              <span className="text-indigo-400 shrink-0 text-xl">✅</span>
+              <span className="text-slate-200">
+                Welcome, feature discovery, social proof, check-in, upgrade
+                nudge, win-back, final
+              </span>
+            </li>
+            <li className="flex items-start gap-4 text-base md:text-lg">
+              <span className="text-indigo-400 shrink-0 text-xl">✅</span>
+              <span className="text-slate-200">
+                Clean HTML export — paste into any ESP
+              </span>
+            </li>
+            <li className="flex items-start gap-4 text-base md:text-lg">
+              <span className="text-indigo-400 shrink-0 text-xl">✅</span>
+              <span className="text-slate-200">
+                AI-powered — not generic templates
+              </span>
+            </li>
+            <li className="flex items-start gap-4 text-base md:text-lg">
+              <span className="text-indigo-400 shrink-0 text-xl">✅</span>
+              <span className="text-slate-200">
+                Built for SaaS founders, not marketers
+              </span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* 5. PRICING */}
+      <section className="py-24 px-6 border-t border-slate-900 bg-slate-950/50">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Simple, transparent pricing
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch max-w-4xl mx-auto">
+            {/* Free Card */}
+            <div className="bg-slate-900/40 border border-slate-900 rounded-2xl p-8 flex flex-col justify-between hover:border-slate-800 transition-all">
+              <div>
+                <h3 className="text-xl font-bold text-white">Free</h3>
+                <p className="mt-2 text-slate-400 text-sm">
+                  Great for trying out the generator.
+                </p>
+                <div className="mt-6 flex items-baseline">
+                  <span className="text-4xl font-extrabold text-white">₹0</span>
+                </div>
+                <p className="mt-6 text-slate-300 text-sm leading-relaxed">
+                  Try free — Generate 1 sequence, export HTML, no credit card
+                </p>
+              </div>
+              <div className="mt-8">
+                <Link
+                  href="/login"
+                  className="block text-center w-full py-3 px-4 rounded-xl border border-slate-800 hover:bg-slate-900 text-white font-medium text-sm transition-all"
+                >
+                  Get started
+                </Link>
+              </div>
             </div>
-            <span className="text-sm font-semibold text-slate-300">
-              EmailBuilder.ai &copy; {new Date().getFullYear()}
+
+            {/* Pro Card */}
+            <div className="bg-slate-900/60 border-2 border-indigo-500 rounded-2xl p-8 flex flex-col justify-between relative shadow-xl shadow-indigo-500/5 hover:border-indigo-400 transition-all">
+              <div className="absolute top-0 right-6 transform -translate-y-1/2 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                Popular
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white">Pro</h3>
+                <p className="mt-2 text-slate-400 text-sm">
+                  Perfect for active SaaS builders.
+                </p>
+                <div className="mt-6 flex items-baseline">
+                  <span className="text-4xl font-extrabold text-white">
+                    ₹999
+                  </span>
+                  <span className="text-slate-400 text-sm font-semibold ml-2">
+                    / month
+                  </span>
+                </div>
+                <p className="mt-6 text-slate-300 text-sm leading-relaxed">
+                  Unlimited sequences, priority generation, ESP integrations
+                  coming soon
+                </p>
+              </div>
+              <div className="mt-8">
+                <Link
+                  href="/login"
+                  className="block text-center w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-md transition-all"
+                >
+                  Get started
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. FOOTER */}
+      <footer className="border-t border-slate-900 py-12 px-6 bg-slate-950 text-slate-500">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="space-y-2 text-center md:text-left">
+            <span className="text-base font-bold text-white block">
+              EmailBuilder.ai
+            </span>
+            <span className="text-sm block">
+              Write SaaS onboarding email sequences with AI
             </span>
           </div>
-          <div className="flex gap-6 text-sm text-slate-500">
-            <span className="hover:text-slate-400 transition-colors">
+
+          <div className="flex flex-col sm:flex-row items-center gap-6 text-sm">
+            <span className="hover:text-slate-400 transition-colors cursor-pointer">
               Privacy Policy
             </span>
-            <span className="hover:text-slate-400 transition-colors">
+            <span className="hover:text-slate-400 transition-colors cursor-pointer">
               Terms of Service
             </span>
-            <a
-              href="https://github.com/poojaanand846-art/saas-email-builder"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-indigo-400 transition-colors"
-            >
-              GitHub Repository
-            </a>
+            <span className="text-slate-600">•</span>
+            <span>Made with ❤️ in India</span>
           </div>
         </div>
       </footer>
