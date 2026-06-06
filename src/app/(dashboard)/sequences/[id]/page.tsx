@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import ExportButton from "./ExportButton";
 import SaveAsTemplateButton from "./SaveAsTemplateButton";
-import { TEMPLATES } from "@/lib/templates";
+import { TEMPLATES, Template } from "@/lib/templates";
 
 export default async function SequenceDetailPage({
   params,
@@ -72,7 +72,7 @@ export default async function SequenceDetailPage({
         id: sequence.template_id,
         name: userTemplate.name,
         // Mocking the rest for the badge since we only need id and name
-      } as any;
+      } as unknown as Template;
     }
   }
 

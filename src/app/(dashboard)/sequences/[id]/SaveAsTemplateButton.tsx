@@ -42,8 +42,12 @@ export default function SaveAsTemplateButton({
       
       setIsOpen(false);
       router.push("/templates");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "Failed to save template");
+      } else {
+        setError("Failed to save template");
+      }
     } finally {
       setIsSaving(false);
     }

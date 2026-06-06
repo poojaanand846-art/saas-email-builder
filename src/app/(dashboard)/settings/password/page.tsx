@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+export const dynamic = "force-dynamic";
+
 import { createClient } from "@/lib/supabase/client";
 import { KeyRound, Shield, AlertCircle, CheckCircle2, Loader2, MonitorSmartphone } from "lucide-react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
