@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { TEMPLATES, Template } from "@/lib/templates";
 import { TemplatePreviewModal } from "@/components/TemplatePreviewModal";
+import { TemplateThumbnail } from "@/components/TemplateThumbnail";
 import { createClient } from "@/lib/supabase/client";
 
 const FILTERS = [
@@ -185,82 +186,52 @@ export default function TemplatesPage() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* Start from scratch card */}
+          {activeFilter === "All" && (
+            <Link
+              href="/generate"
+              className="bg-slate-900/30 backdrop-blur-sm border border-slate-800 border-dashed rounded-2xl p-5 flex flex-col hover:bg-slate-800/50 hover:border-indigo-500/50 hover:border-solid transition-all duration-300 group min-h-[300px] items-center justify-center text-center gap-4"
+            >
+              <div className="w-12 h-12 rounded-full bg-slate-800/80 flex items-center justify-center text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-500/10 transition-colors">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+              </div>
+              <span className="text-slate-400 font-medium group-hover:text-white transition-colors">
+                Create a blank Email
+              </span>
+            </Link>
+          )}
+
           {filteredTemplates.map((template) => (
             <div
               key={template.id}
-              className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-5 flex flex-col hover:bg-slate-800/80 hover:border-indigo-500/30 transition-all duration-300 group relative overflow-hidden"
+              onClick={() => setPreviewTemplate(template)}
+              className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl flex flex-col hover:border-indigo-500/50 transition-all duration-300 group overflow-hidden cursor-pointer shadow-lg hover:shadow-[0_0_20px_rgba(99,102,241,0.15)]"
             >
-              <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/5 to-violet-500/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none" />
-              <div className="flex flex-col flex-1 space-y-4 relative z-10">
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="font-semibold text-white text-base leading-tight">
-                    {template.name}
-                  </h3>
+              {/* Thumbnail Container */}
+              <div className="h-[240px] bg-[#0A0A0A] w-full overflow-hidden relative border-b border-slate-800/50 flex justify-center pt-6">
+                <div className="w-[85%] h-[400px] pointer-events-none origin-top scale-[0.6] sm:scale-[0.65] lg:scale-[0.55] xl:scale-[0.65] absolute top-6 group-hover:-translate-y-2 transition-transform duration-500">
+                  <TemplateThumbnail contentType={template.emails[0].contentType} />
                 </div>
-
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-white">
-                    {template.goal}
+                {/* Overlay on hover for "Preview" */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
+                  <span className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-medium text-sm shadow-xl translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                    Preview Template
                   </span>
-                  <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-white/5 text-neutral-400">
-                    {template.emailCount} emails
-                  </span>
-                </div>
-
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {template.contentTypes.map((type) => (
-                    <span
-                      key={type}
-                      className="text-xs text-neutral-400 border border-white/5 px-2 py-1 rounded"
-                    >
-                      {type}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="pt-4 border-t border-white/5 mt-auto">
-                  <div className="flex items-center overflow-x-auto scrollbar-hide py-1">
-                    {template.emails.map((email, idx) => {
-                      const colors = [
-                        "bg-blue-500/10 text-blue-400 border-blue-500/20",
-                        "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-                        "bg-purple-500/10 text-purple-400 border-purple-500/20",
-                        "bg-pink-500/10 text-pink-400 border-pink-500/20",
-                        "bg-orange-500/10 text-orange-400 border-orange-500/20",
-                      ];
-                      const colorClass = colors[idx % colors.length];
-
-                      return (
-                        <div key={idx} className="flex items-center">
-                          <span
-                            className={`text-[10px] font-bold whitespace-nowrap px-2.5 py-1 rounded-full border ${colorClass}`}
-                          >
-                            Day {email.dayOffset}
-                          </span>
-                          {idx < template.emails.length - 1 && (
-                            <span className="text-slate-600 mx-2 font-bold">·</span>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 pt-5 mt-5 border-t border-white/5">
-                <button 
-                  onClick={() => setPreviewTemplate(template)}
-                  className="flex-1 px-4 py-2.5 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 hover:text-white font-medium text-sm transition-all"
-                >
-                  Preview
-                </button>
-                <Link
-                  href={`/generate?template=${template.id}`}
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white font-medium text-sm text-center transition-colors border border-indigo-500/30 hover:border-indigo-500 shadow-lg shadow-indigo-500/10"
-                >
-                  Use template
-                </Link>
+              {/* Card Content Footer */}
+              <div className="p-4 bg-slate-900/80 flex flex-col gap-1">
+                <h3 className="font-medium text-white text-[15px] leading-tight truncate">
+                  {template.name}
+                </h3>
+                <div className="flex items-center justify-between mt-1">
+                  <span className="text-xs text-slate-400 font-medium">{template.emailCount} emails</span>
+                  <span className="text-xs text-slate-500">{template.layoutStyle}</span>
+                </div>
               </div>
             </div>
           ))}

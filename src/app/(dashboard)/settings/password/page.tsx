@@ -14,11 +14,10 @@ export default function PasswordSettingsPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [isSigningOutOthers, setIsSigningOutOthers] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
-  
-  const supabase = createClient();
 
   useEffect(() => {
     async function loadUser() {
+      const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         setUser(user);
@@ -84,6 +83,7 @@ export default function PasswordSettingsPage() {
   const handleSignOutOthers = async () => {
     setIsSigningOutOthers(true);
     try {
+      const supabase = createClient();
       const { error } = await supabase.auth.signOut({ scope: 'others' });
       if (error) throw error;
       showToast("All other sessions revoked", "success");

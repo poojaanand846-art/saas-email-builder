@@ -21,10 +21,9 @@ export default function ProfileSettingsPage() {
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
-  const supabase = createClient();
-
   useEffect(() => {
     async function loadProfile() {
+      const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         setUser(user);
@@ -100,6 +99,7 @@ export default function ProfileSettingsPage() {
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}/${crypto.randomUUID()}.${fileExt}`;
 
+      const supabase = createClient();
       const { error: uploadError } = await supabase.storage
         .from("avatars")
         .upload(fileName, file, { upsert: true });
@@ -152,6 +152,7 @@ export default function ProfileSettingsPage() {
         if (parts.length === 2) {
           const filePathWithQuery = parts[1];
           const filePath = filePathWithQuery.split('?')[0];
+          const supabase = createClient();
           await supabase.storage.from("avatars").remove([filePath]);
         }
       }
