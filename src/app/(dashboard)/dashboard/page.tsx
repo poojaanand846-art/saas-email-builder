@@ -172,7 +172,7 @@ export default async function DashboardPage() {
         /* Sequences List Grid */
         <div className="space-y-4">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Your Sequences ({sequences.length})
+            My Sequences ({sequences.length})
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {sequences.map((seq) => {
