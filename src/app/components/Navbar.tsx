@@ -2,44 +2,71 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { cn } from "@/lib/utils";
+import LogoIcon from "./LogoIcon";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 50) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  });
 
   return (
-    <header className="border-b border-slate-900 bg-[#0f172a]/90 backdrop-blur-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={cn(
+        "fixed top-0 inset-x-0 z-50 transition-all duration-300",
+        isScrolled
+          ? "bg-[#09090b]/70 backdrop-blur-lg border-b border-white/5 shadow-lg"
+          : "bg-transparent border-transparent"
+      )}
+    >
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded bg-[#6366f1] flex items-center justify-center text-white font-bold text-xl">
-            E
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow">
+            <LogoIcon className="w-6 h-6" />
           </div>
-          <Link href="/" className="text-xl font-bold tracking-tight text-white">
+          <span className="text-xl font-bold tracking-tight text-white">
             Designmails
-          </Link>
-        </div>
+          </span>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link href="#features" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-            Features
-          </Link>
-          <Link href="#how-it-works" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-            How it works
-          </Link>
-          <Link href="#pricing" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-            Pricing
-          </Link>
-          <Link href="#faq" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-            FAQ
-          </Link>
+          {["Features", "How it works", "Pricing", "FAQ"].map((item) => (
+            <Link
+              key={item}
+              href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+              className="text-sm font-medium text-slate-400 hover:text-white transition-colors relative group"
+            >
+              {item}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-500 transition-all group-hover:w-full" />
+            </Link>
+          ))}
         </nav>
 
         {/* CTA & Mobile Toggle */}
         <div className="flex items-center gap-4">
           <Link
             href="/login"
-            className="hidden md:inline-flex text-sm font-semibold text-white bg-[#6366f1] hover:bg-indigo-500 px-5 py-2.5 rounded-xl transition-all shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20"
+            className="hidden md:inline-flex text-sm font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/10 px-5 py-2.5 rounded-xl transition-all"
+          >
+            Sign in
+          </Link>
+          <Link
+            href="/login"
+            className="hidden md:inline-flex text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 px-5 py-2.5 rounded-xl transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)]"
           >
             Start free
           </Link>
@@ -65,29 +92,32 @@ export default function Navbar() {
 
       {/* Mobile Nav Dropdown */}
       {isOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-[#0f172a] border-b border-slate-900 shadow-xl px-6 py-6 flex flex-col gap-4">
-          <Link href="#features" onClick={() => setIsOpen(false)} className="text-lg font-medium text-slate-300 hover:text-white">
-            Features
-          </Link>
-          <Link href="#how-it-works" onClick={() => setIsOpen(false)} className="text-lg font-medium text-slate-300 hover:text-white">
-            How it works
-          </Link>
-          <Link href="#pricing" onClick={() => setIsOpen(false)} className="text-lg font-medium text-slate-300 hover:text-white">
-            Pricing
-          </Link>
-          <Link href="#faq" onClick={() => setIsOpen(false)} className="text-lg font-medium text-slate-300 hover:text-white">
-            FAQ
-          </Link>
-          <hr className="border-slate-800 my-2" />
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          className="md:hidden absolute top-20 left-0 w-full bg-[#0f172a]/95 backdrop-blur-xl border-b border-white/5 shadow-2xl px-6 py-8 flex flex-col gap-6"
+        >
+          {["Features", "How it works", "Pricing", "FAQ"].map((item) => (
+            <Link
+              key={item}
+              href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+              onClick={() => setIsOpen(false)}
+              className="text-lg font-medium text-slate-300 hover:text-white transition-colors"
+            >
+              {item}
+            </Link>
+          ))}
+          <hr className="border-white/5 my-2" />
           <Link
             href="/login"
             onClick={() => setIsOpen(false)}
-            className="text-center text-base font-semibold text-white bg-[#6366f1] hover:bg-indigo-500 px-5 py-3 rounded-xl transition-all"
+            className="text-center text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-500 px-5 py-3 rounded-xl transition-all shadow-lg shadow-indigo-500/20"
           >
             Start free
           </Link>
-        </div>
+        </motion.div>
       )}
-    </header>
+    </motion.header>
   );
 }

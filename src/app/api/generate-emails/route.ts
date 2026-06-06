@@ -12,7 +12,8 @@ const generateSchema = z.object({
     .string()
     .min(20, "Product description must be at least 20 characters.")
     .max(800, "Product description must be under 800 characters."),
-  tone: z.enum(["professional", "friendly", "casual"]),
+  tone: z.enum(["professional", "friendly", "casual", "persuasive", "helpful", "direct"]),
+  templateId: z.string().optional(),
 });
 
 // Simple in-memory rate limiting map
@@ -79,7 +80,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { sequenceName, productDescription, tone } = validation.data;
+    const { sequenceName, productDescription, tone, templateId } = validation.data;
 
     // 3. Enforce Rate Limit
     if (!checkRateLimit(user.id)) {
@@ -216,6 +217,7 @@ export async function POST(request: Request) {
         name: sequenceName,
         tone: tone,
         status: "draft",
+        template_id: templateId || null,
       })
       .select("id")
       .single();

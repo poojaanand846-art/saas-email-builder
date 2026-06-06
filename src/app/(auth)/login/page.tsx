@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import LogoIcon from "@/app/components/LogoIcon";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -71,23 +72,11 @@ export default function LoginPage() {
     <div className="w-full bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 rounded-2xl p-8 shadow-2xl transition-all duration-300">
       {/* Brand Header */}
       <div className="flex flex-col items-center mb-8">
-        <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-600/30 mb-4">
-          <svg
-            className="w-6 h-6 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 19v-8.93a2 2 0 01.89-1.664l8-5.333a2 2 0 012.22 0l8 5.333A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-2.25-1.5a2 2 0 00-2.22 0l-2.25 1.5"
-            />
-          </svg>
+        <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-600/30 mb-4 group-hover:shadow-indigo-600/50 transition-shadow">
+          <LogoIcon className="w-7 h-7 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-white tracking-tight">
-          Welcome to Email Builder
+          Welcome to Designmails
         </h2>
         <p className="text-sm text-slate-400 mt-1">
           Sign in to build your email sequences

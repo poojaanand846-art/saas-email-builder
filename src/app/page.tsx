@@ -3,11 +3,15 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import Navbar from "./components/Navbar";
 import FaqAccordion from "./components/FaqAccordion";
+import AnimatedReveal from "./components/AnimatedReveal";
+import FeatureCard from "./components/FeatureCard";
+import HeroAppPreview from "./components/HeroAppPreview";
+import LogoIcon from "./components/LogoIcon";
+import { Sparkles, Zap, Shield, Mail, Layout, Eye, ArrowRight, CheckCircle2, Copy } from "lucide-react";
 
 export default async function Home() {
   const supabase = createClient();
 
-  // Try to retrieve user session to redirect to dashboard if logged in
   try {
     const {
       data: { user },
@@ -20,179 +24,168 @@ export default async function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-slate-100 font-sans selection:bg-[#6366f1]/30 selection:text-indigo-200 overflow-x-hidden scroll-smooth">
+    <div className="min-h-screen bg-[#09090b] text-slate-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 overflow-x-hidden scroll-smooth">
       
       {/* 1. NAVBAR */}
       <Navbar />
 
       {/* 2. HERO */}
-      <section className="relative pt-20 pb-24 md:pt-32 md:pb-40 px-6">
-        {/* Background Decorative Gradients */}
-        <div className="absolute top-[-10%] left-[-20%] w-[80%] h-[60%] rounded-full bg-indigo-900/10 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] right-[-20%] w-[80%] h-[60%] rounded-full bg-violet-900/10 blur-[120px] pointer-events-none" />
+      <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 px-6 min-h-[90vh] flex flex-col justify-start overflow-hidden">
+        {/* Subtle Background Elements */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-64 bg-indigo-500/20 rounded-[100%] blur-[120px] pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto text-center flex flex-col items-center">
-          <span className="text-[#6366f1] font-semibold text-sm uppercase tracking-wider mb-6 block">
-            Onboarding emails powered by Gemini AI
-          </span>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-tight">
-            Your SaaS onboarding emails &mdash; written in 60 seconds.
-          </h1>
-
-          <p className="mt-8 text-lg md:text-xl text-slate-400 max-w-3xl leading-relaxed">
-            Describe your product. Designmails generates a complete 7-email onboarding sequence &mdash; welcome, activation, social proof, and more. Edit it, export it, send it. No copywriter. No blank page.
-          </p>
-
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
-            <Link
-              href="/login"
-              className="w-full sm:w-auto text-center px-8 py-4 bg-[#6366f1] hover:bg-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/20 transition-all text-lg"
-            >
-              Generate my emails free
-            </Link>
-            <Link
-              href="#how-it-works"
-              className="w-full sm:w-auto text-center px-8 py-4 bg-transparent hover:bg-slate-800 border border-slate-700 text-white font-semibold rounded-xl transition-all text-lg"
-            >
-              See how it works
-            </Link>
-          </div>
-          <p className="mt-4 text-xs text-slate-500">
-            Free to start &middot; No credit card required
-          </p>
-          
-          <div className="mt-12 flex flex-col md:flex-row items-center justify-center gap-4 text-sm text-slate-400 font-medium">
-            <span className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-              Trusted by early-stage SaaS founders
-            </span>
-            <span className="hidden md:inline text-slate-700">&bull;</span>
-            <span className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-              Powered by Google Gemini AI
-            </span>
-            <span className="hidden md:inline text-slate-700">&bull;</span>
-            <span className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
-              Export to any ESP
-            </span>
-          </div>
-
-          {/* Screenshot Placeholder */}
-          <div className="mt-20 w-full max-w-5xl aspect-[16/9] bg-slate-800 border border-slate-700 rounded-2xl flex items-center justify-center p-4 shadow-2xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#6366f1]/10 to-transparent pointer-events-none" />
-            <div className="text-center space-y-4">
-               <div className="w-20 h-20 mx-auto bg-slate-900 rounded-xl flex items-center justify-center">
-                 <svg className="w-10 h-10 text-[#6366f1]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" /></svg>
-               </div>
-               <span className="text-sm font-medium text-slate-500 block">
-                 Dashboard Screenshot Placeholder
-               </span>
+        <div className="max-w-5xl mx-auto text-center flex flex-col items-center relative z-10">
+          <AnimatedReveal delay={0.1}>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-slate-300 font-medium text-xs tracking-wide mb-8 backdrop-blur-md">
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+              Powered by Gemini 1.5 AI
             </div>
-          </div>
+          </AnimatedReveal>
+          
+          <AnimatedReveal delay={0.2}>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-bold tracking-[-0.03em] text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 max-w-4xl leading-[1.05] mx-auto pb-2">
+              SaaS onboarding emails, generated in seconds.
+            </h1>
+          </AnimatedReveal>
+
+          <AnimatedReveal delay={0.3}>
+            <p className="mt-8 text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed font-light tracking-wide">
+              Describe your product in two sentences. Designmails writes a complete, highly-converting 7-email sequence. No copywriters. No blank pages.
+            </p>
+          </AnimatedReveal>
+
+          <AnimatedReveal delay={0.4}>
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
+              <Link
+                href="/login"
+                className="w-full sm:w-auto px-8 py-3.5 bg-white text-black hover:bg-slate-200 font-medium rounded-xl transition-all text-base flex items-center justify-center gap-2 group shadow-[0_0_40px_rgba(255,255,255,0.1)]"
+              >
+                Generate my emails free
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="#how-it-works"
+                className="w-full sm:w-auto px-8 py-3.5 bg-transparent hover:bg-white/5 border border-white/10 text-white font-medium rounded-xl backdrop-blur-md transition-all text-base"
+              >
+                See how it works
+              </Link>
+            </div>
+          </AnimatedReveal>
         </div>
+
+        {/* Glossy App Preview */}
+        <HeroAppPreview />
+
       </section>
 
       {/* 3. PROBLEM */}
-      <section className="py-24 px-6 border-t border-slate-900 bg-[#0f172a]">
+      <section className="py-32 px-6 border-t border-white/5 bg-[#0b1121] relative z-20">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-4xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl leading-tight">
-              Most SaaS founders launch without onboarding emails. The ones that do, wish they hadn&apos;t waited.
-            </h2>
-          </div>
+          <AnimatedReveal>
+            <div className="text-center max-w-4xl mx-auto mb-20">
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl leading-tight">
+                Most SaaS founders launch without onboarding emails. The ones that do, wish they hadn&apos;t waited.
+              </h2>
+            </div>
+          </AnimatedReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl">
-              <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3">You launched weeks ago &mdash; still no onboarding sequence</h3>
-              <p className="text-slate-400 leading-relaxed">
-                Writing 7 emails from scratch takes days. Most founders skip it entirely and wonder why trial users churn.
-              </p>
-            </div>
-            
-            <div className="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl">
-              <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3">Hiring a copywriter costs ₹20,000+</h3>
-              <p className="text-slate-400 leading-relaxed">
-                And then you still need to brief them, review drafts, and wait a week. For a sequence you should have shipped on day one.
-              </p>
-            </div>
-
-            <div className="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl">
-              <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 mb-6">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3">Generic templates don&apos;t fit your product</h3>
-              <p className="text-slate-400 leading-relaxed">
-                Downloading a template and swapping your logo is not onboarding. Your users deserve emails that explain YOUR product.
-              </p>
-            </div>
+            {[
+              {
+                title: "You launched weeks ago — still no onboarding sequence",
+                desc: "Writing 7 emails from scratch takes days. Most founders skip it entirely and wonder why trial users churn.",
+                icon: <CheckCircle2 className="w-6 h-6" />
+              },
+              {
+                title: "Hiring a copywriter costs ₹20,000+",
+                desc: "And then you still need to brief them, review drafts, and wait a week. For a sequence you should have shipped on day one.",
+                icon: <Zap className="w-6 h-6" />
+              },
+              {
+                title: "Generic templates don't fit your product",
+                desc: "Downloading a template and swapping your logo is not onboarding. Your users deserve emails that explain YOUR product.",
+                icon: <Copy className="w-6 h-6" />
+              }
+            ].map((item, idx) => (
+              <AnimatedReveal key={idx} delay={idx * 0.1} direction="up">
+                <div className="h-full bg-gradient-to-b from-slate-900 to-slate-900/40 border border-slate-800 p-8 rounded-3xl transition-transform hover:-translate-y-1 duration-300">
+                  <div className="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 mb-6 shadow-inner">
+                    {item.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-4 leading-snug">{item.title}</h3>
+                  <p className="text-slate-400 leading-relaxed">{item.desc}</p>
+                </div>
+              </AnimatedReveal>
+            ))}
           </div>
         </div>
       </section>
 
       {/* 4. HOW IT WORKS */}
-      <section id="how-it-works" className="py-24 px-6 border-t border-slate-900 bg-slate-900/20">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-4">
-              From blank page to full sequence in 3 steps
-            </h2>
-            <p className="text-xl text-slate-400">
-              No setup. No learning curve. Just your emails, ready to send.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="space-y-6 relative">
-              <span className="text-6xl font-black text-slate-800/50 absolute -top-8 -left-4 z-0 select-none">01</span>
-              <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-white mb-4">Describe your product</h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Tell Designmails what your SaaS does in 2&ndash;3 sentences. Who it&apos;s for, what problem it solves, what makes it different.
-                </p>
-              </div>
+      <section id="how-it-works" className="py-32 px-6 border-t border-white/5 bg-[#0f172a] relative overflow-hidden">
+        {/* Glow */}
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none translate-x-1/2 -translate-y-1/2" />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <AnimatedReveal>
+            <div className="max-w-3xl mb-24">
+              <h2 className="text-4xl font-extrabold tracking-tight text-white md:text-6xl mb-6">
+                From blank page to full sequence in 3 steps
+              </h2>
+              <p className="text-xl text-slate-400 font-light">
+                No setup. No learning curve. Just your emails, ready to send.
+              </p>
             </div>
+          </AnimatedReveal>
 
-            <div className="space-y-6 relative">
-              <span className="text-6xl font-black text-slate-800/50 absolute -top-8 -left-4 z-0 select-none">02</span>
-              <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-white mb-4">AI writes your full sequence</h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Gemini AI generates 7 professionally written onboarding emails &mdash; tailored to your product. Subject lines, preview text, and full email body. Done in under 60 seconds.
-                </p>
-              </div>
-            </div>
-
-            <div className="space-y-6 relative">
-              <span className="text-6xl font-black text-slate-800/50 absolute -top-8 -left-4 z-0 select-none">03</span>
-              <div className="relative z-10">
-                <h3 className="text-2xl font-bold text-white mb-4">Edit, export, and send</h3>
-                <p className="text-slate-400 leading-relaxed">
-                  Fine-tune any email in the visual editor. Preview on mobile and desktop. Export clean HTML or push to your ESP with one click.
-                </p>
-              </div>
-            </div>
+          <div className="space-y-12 md:space-y-0 md:grid md:grid-cols-3 md:gap-12">
+            {[
+              {
+                step: "01",
+                title: "Describe your product",
+                desc: "Tell Designmails what your SaaS does in 2–3 sentences. Who it's for, what problem it solves, what makes it different."
+              },
+              {
+                step: "02",
+                title: "AI writes your full sequence",
+                desc: "Gemini AI generates 7 professionally written onboarding emails — tailored to your product. Subject lines, preview text, and full email body. Done in under 60 seconds."
+              },
+              {
+                step: "03",
+                title: "Edit, export, and send",
+                desc: "Fine-tune any email in the visual editor. Preview on mobile and desktop. Export clean HTML or push to your ESP with one click."
+              }
+            ].map((item, idx) => (
+              <AnimatedReveal key={idx} delay={idx * 0.2} direction="up" className="relative group">
+                <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/10 to-violet-500/10 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-500" />
+                <div className="relative border-l-2 border-slate-800 pl-8 pb-12 md:pb-0 md:border-l-0 md:border-t-2 md:pl-0 md:pt-12">
+                  <span className="absolute -left-[11px] top-0 md:-top-[11px] md:left-0 w-5 h-5 rounded-full bg-[#0f172a] border-4 border-indigo-500" />
+                  <span className="text-7xl font-black text-slate-800/30 absolute -top-8 left-8 md:left-0 md:-top-24 z-0 select-none transition-colors group-hover:text-indigo-900/30">{item.step}</span>
+                  <div className="relative z-10 mt-8 md:mt-4">
+                    <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
+                    <p className="text-slate-400 leading-relaxed text-lg">{item.desc}</p>
+                  </div>
+                </div>
+              </AnimatedReveal>
+            ))}
           </div>
         </div>
       </section>
 
       {/* 5. THE 7 EMAILS */}
-      <section className="py-24 px-6 border-t border-slate-900 bg-[#0f172a]">
+      <section className="py-32 px-6 border-t border-white/5 bg-[#0b1121]">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-4">
-              A complete onboarding sequence &mdash; not just one welcome email
-            </h2>
-            <p className="text-xl text-slate-400">
-              Every email your new users need, from signup to paid.
-            </p>
-          </div>
+          <AnimatedReveal>
+            <div className="text-center mb-20">
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-6">
+                A complete onboarding sequence
+              </h2>
+              <p className="text-xl text-slate-400">
+                Every email your new users need, from signup to paid.
+              </p>
+            </div>
+          </AnimatedReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
@@ -204,231 +197,231 @@ export default async function Home() {
               { day: 14, title: 'Win-back', desc: "Make a clear, compelling offer to upgrade their account or return to the app." },
               { day: 30, title: 'Final', desc: "Create urgency or ask for feedback if they haven't upgraded yet." },
             ].map((email, idx) => (
-              <div key={idx} className={`bg-slate-900/60 border border-slate-800 rounded-2xl p-6 flex flex-col sm:flex-row items-start gap-5 hover:border-slate-700 transition-colors ${idx === 6 ? 'md:col-span-2 md:max-w-md md:mx-auto w-full' : ''}`}>
-                <div className="shrink-0 px-4 py-2 rounded-lg bg-[#6366f1]/10 border border-[#6366f1]/20 flex items-center justify-center text-[#6366f1] font-bold text-sm">
-                  Day {email.day}
+              <AnimatedReveal key={idx} delay={idx * 0.05} direction="up" className={idx === 6 ? 'md:col-span-2 md:max-w-md md:mx-auto w-full' : ''}>
+                <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-3xl p-6 flex items-start gap-5 hover:bg-slate-800/80 hover:border-indigo-500/30 transition-all duration-300 group cursor-default">
+                  <div className="shrink-0 px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 font-bold text-sm group-hover:bg-indigo-500/20 group-hover:text-indigo-400 group-hover:border-indigo-500/30 transition-colors">
+                    Day {email.day}
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-indigo-100 transition-colors">{email.title}</h3>
+                    <p className="text-sm text-slate-400 leading-relaxed">{email.desc}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white mb-2">{email.title}</h3>
-                  <p className="text-sm text-slate-400 leading-relaxed">{email.desc}</p>
-                </div>
-              </div>
+              </AnimatedReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* 6. FEATURES */}
-      <section id="features" className="py-24 px-6 border-t border-slate-900 bg-slate-900/20">
+      <section id="features" className="py-32 px-6 border-t border-white/5 bg-[#0f172a]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
-              Everything you need. Nothing you don&apos;t.
-            </h2>
-          </div>
+          <AnimatedReveal>
+            <div className="text-center mb-20">
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+                Everything you need. Nothing you don&apos;t.
+              </h2>
+            </div>
+          </AnimatedReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
-              <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 mb-5">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">AI-generated copy</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Powered by Gemini 1.5 Pro to write persuasive, natural-sounding emails that don&apos;t feel like a robot wrote them.
-              </p>
-            </div>
-            {/* Feature 2 */}
-            <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
-              <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 mb-5">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Mobile + desktop preview</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                See exactly what your users will see. Instantly toggle between desktop and mobile previews while you edit.
-              </p>
-            </div>
-            {/* Feature 3 */}
-            <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
-              <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 mb-5">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Clean HTML export</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Export battle-tested, responsive HTML that works perfectly in Gmail, Outlook, Apple Mail, and everywhere else.
-              </p>
-            </div>
-            {/* Feature 4 */}
-            <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl relative overflow-hidden">
-              <div className="absolute top-4 right-4 bg-slate-800 text-xs font-bold px-2 py-1 rounded text-slate-400 uppercase tracking-wider">Coming soon</div>
-              <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 mb-5 opacity-50">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2 opacity-50">ESP integrations</h3>
-              <p className="text-slate-400 text-sm leading-relaxed opacity-50">
-                Push your completed sequences directly to Resend, Mailgun, or Postmark with a single click.
-              </p>
-            </div>
-            {/* Feature 5 */}
-            <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
-              <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 mb-5">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Visual editor</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Tweak the AI&apos;s copy, change colors, and swap button links in a notion-style rich text editor.
-              </p>
-            </div>
-            {/* Feature 6 */}
-            <div className="bg-slate-900 border border-slate-800 p-8 rounded-2xl">
-              <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 mb-5">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Your data stays yours</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                We don&apos;t claim ownership of the emails you generate. You own the copy and the HTML forever.
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <AnimatedReveal delay={0.1}>
+              <FeatureCard 
+                title="AI-generated copy" 
+                description="Powered by Gemini 1.5 Pro to write persuasive, natural-sounding emails that don't feel like a robot wrote them."
+                icon={<Sparkles className="w-6 h-6" />}
+                className="h-full"
+              />
+            </AnimatedReveal>
+            <AnimatedReveal delay={0.2}>
+              <FeatureCard 
+                title="Mobile + desktop preview" 
+                description="See exactly what your users will see. Instantly toggle between desktop and mobile previews while you edit."
+                icon={<Eye className="w-6 h-6" />}
+                className="h-full"
+              />
+            </AnimatedReveal>
+            <AnimatedReveal delay={0.3}>
+              <FeatureCard 
+                title="Clean HTML export" 
+                description="Export battle-tested, responsive HTML that works perfectly in Gmail, Outlook, Apple Mail, and everywhere else."
+                icon={<Layout className="w-6 h-6" />}
+                className="h-full"
+              />
+            </AnimatedReveal>
+            <AnimatedReveal delay={0.4}>
+              <FeatureCard 
+                title="ESP integrations" 
+                description="Push your completed sequences directly to Resend, Mailgun, or Postmark with a single click."
+                icon={<Mail className="w-6 h-6" />}
+                badge="Coming Soon"
+                className="h-full opacity-60 hover:opacity-100"
+              />
+            </AnimatedReveal>
+            <AnimatedReveal delay={0.5}>
+              <FeatureCard 
+                title="Visual editor" 
+                description="Tweak the AI's copy, change colors, and swap button links in a notion-style rich text editor."
+                icon={<Layout className="w-6 h-6" />}
+                className="h-full"
+              />
+            </AnimatedReveal>
+            <AnimatedReveal delay={0.6}>
+              <FeatureCard 
+                title="Your data stays yours" 
+                description="We don't claim ownership of the emails you generate. You own the copy and the HTML forever."
+                icon={<Shield className="w-6 h-6" />}
+                className="h-full"
+              />
+            </AnimatedReveal>
           </div>
         </div>
       </section>
 
       {/* 7. PRICING */}
-      <section id="pricing" className="py-24 px-6 border-t border-slate-900 bg-[#0f172a]">
+      <section id="pricing" className="py-32 px-6 border-t border-white/5 bg-[#0b1121]">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-4">
-              Simple pricing. No surprises.
-            </h2>
-            <p className="text-xl text-slate-400">
-              Start free. Upgrade when you&apos;re ready.
-            </p>
-          </div>
+          <AnimatedReveal>
+            <div className="text-center mb-20">
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl mb-6">
+                Simple pricing. No surprises.
+              </h2>
+              <p className="text-xl text-slate-400">
+                Start free. Upgrade when you&apos;re ready.
+              </p>
+            </div>
+          </AnimatedReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Free Tier */}
-            <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-8 md:p-10 flex flex-col">
-              <h3 className="text-2xl font-bold text-white mb-2">Free</h3>
-              <p className="text-slate-400 mb-6">Perfect for trying it out.</p>
-              <div className="mb-8">
-                <span className="text-5xl font-extrabold text-white">&#8377;0</span>
+            <AnimatedReveal delay={0.1}>
+              <div className="bg-slate-900 border border-slate-800 rounded-[2rem] p-8 md:p-12 flex flex-col h-full hover:border-slate-700 transition-colors">
+                <h3 className="text-2xl font-bold text-white mb-2">Free</h3>
+                <p className="text-slate-400 mb-8">Perfect for trying it out.</p>
+                <div className="mb-10">
+                  <span className="text-6xl font-extrabold text-white tracking-tighter">&#8377;0</span>
+                </div>
+                <ul className="space-y-5 mb-12 flex-1">
+                  {[
+                    "1 workspace",
+                    "1 onboarding sequence",
+                    "Standard HTML export"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-4 text-slate-300 font-medium">
+                      <CheckCircle2 className="w-6 h-6 text-emerald-500 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/login" className="w-full py-4 rounded-2xl border border-slate-700 hover:bg-slate-800 text-white font-bold text-center transition-all text-lg">
+                  Get started free
+                </Link>
               </div>
-              <ul className="space-y-4 mb-10 flex-1">
-                <li className="flex items-start gap-3 text-slate-300">
-                  <svg className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  <span>1 workspace</span>
-                </li>
-                <li className="flex items-start gap-3 text-slate-300">
-                  <svg className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  <span>1 onboarding sequence</span>
-                </li>
-                <li className="flex items-start gap-3 text-slate-300">
-                  <svg className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  <span>Standard HTML export</span>
-                </li>
-              </ul>
-              <Link href="/login" className="w-full py-4 rounded-xl border border-slate-700 hover:bg-slate-800 text-white font-bold text-center transition-all">
-                Get started free
-              </Link>
-            </div>
+            </AnimatedReveal>
 
             {/* Pro Tier */}
-            <div className="bg-slate-900 border-2 border-[#6366f1] rounded-3xl p-8 md:p-10 flex flex-col relative shadow-2xl shadow-indigo-900/20">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#6366f1] text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                Most popular
+            <AnimatedReveal delay={0.2}>
+              <div className="bg-slate-900 border-2 border-indigo-500 rounded-[2rem] p-8 md:p-12 flex flex-col relative h-full shadow-[0_0_50px_rgba(99,102,241,0.15)]">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-indigo-500 text-white px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg shadow-indigo-500/30">
+                  Most popular
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
+                <p className="text-slate-400 mb-8">For serious SaaS founders.</p>
+                <div className="mb-10 flex items-baseline">
+                  <span className="text-6xl font-extrabold text-white tracking-tighter">&#8377;999</span>
+                  <span className="text-slate-500 font-medium ml-2 text-xl">/mo</span>
+                </div>
+                <ul className="space-y-5 mb-12 flex-1">
+                  {[
+                    "Unlimited workspaces",
+                    "Unlimited sequences",
+                    "1-click ESP push (soon)",
+                    "Priority support"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-4 text-slate-300 font-medium">
+                      <CheckCircle2 className="w-6 h-6 text-indigo-400 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/login" className="w-full py-4 rounded-2xl bg-white hover:bg-slate-100 text-indigo-950 font-bold text-center shadow-lg transition-all text-lg">
+                  Upgrade to Pro
+                </Link>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
-              <p className="text-slate-400 mb-6">For serious SaaS founders.</p>
-              <div className="mb-8">
-                <span className="text-5xl font-extrabold text-white">&#8377;999</span>
-                <span className="text-slate-500 font-medium ml-2">/mo</span>
-              </div>
-              <ul className="space-y-4 mb-10 flex-1">
-                <li className="flex items-start gap-3 text-slate-300">
-                  <svg className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  <span>Unlimited workspaces</span>
-                </li>
-                <li className="flex items-start gap-3 text-slate-300">
-                  <svg className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  <span>Unlimited sequences</span>
-                </li>
-                <li className="flex items-start gap-3 text-slate-300">
-                  <svg className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  <span>1-click ESP push (soon)</span>
-                </li>
-                <li className="flex items-start gap-3 text-slate-300">
-                  <svg className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                  <span>Priority support</span>
-                </li>
-              </ul>
-              <Link href="/login" className="w-full py-4 rounded-xl bg-[#6366f1] hover:bg-indigo-500 text-white font-bold text-center shadow-lg shadow-indigo-600/20 transition-all">
-                Upgrade to Pro
-              </Link>
-            </div>
+            </AnimatedReveal>
           </div>
           
-          <div className="mt-8 text-center text-sm text-slate-500">
-            Cancel anytime &middot; Billed monthly &middot; Prices in INR
-          </div>
+          <AnimatedReveal delay={0.3}>
+            <div className="mt-12 text-center text-sm font-medium text-slate-500">
+              Cancel anytime &middot; Billed monthly &middot; Prices in INR
+            </div>
+          </AnimatedReveal>
         </div>
       </section>
 
       {/* 8. FAQ */}
-      <section id="faq" className="py-24 px-6 border-t border-slate-900 bg-slate-900/20">
+      <section id="faq" className="py-32 px-6 border-t border-white/5 bg-[#0f172a]">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
-              Questions? Answered.
-            </h2>
-          </div>
+          <AnimatedReveal>
+            <div className="text-center mb-20">
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+                Questions? Answered.
+              </h2>
+            </div>
+          </AnimatedReveal>
           
-          <FaqAccordion />
-          
+          <AnimatedReveal delay={0.2}>
+            <FaqAccordion />
+          </AnimatedReveal>
         </div>
       </section>
 
       {/* 9. FINAL CTA BANNER */}
-      <section className="py-24 px-6 bg-[#6366f1] relative overflow-hidden">
-        {/* Subtle pattern or glow */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent pointer-events-none" />
+      <section className="py-32 px-6 bg-gradient-to-br from-indigo-600 to-violet-700 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10 mix-blend-overlay pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-black/10 rounded-full blur-3xl pointer-events-none" />
+        
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-6">
-            Your first onboarding sequence is free.
-          </h2>
-          <p className="text-xl text-indigo-100 mb-10 max-w-2xl mx-auto">
-            Join SaaS founders who stopped guessing and started converting.
-          </p>
-          <Link
-            href="/login"
-            className="inline-block px-10 py-5 bg-white text-[#6366f1] hover:bg-slate-50 font-bold rounded-xl shadow-2xl transition-all text-lg"
-          >
-            Generate my emails now
-          </Link>
+          <AnimatedReveal>
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-8">
+              Your first onboarding sequence is free.
+            </h2>
+            <p className="text-xl md:text-2xl text-indigo-100/90 mb-12 max-w-2xl mx-auto font-light">
+              Join SaaS founders who stopped guessing and started converting.
+            </p>
+            <Link
+              href="/login"
+              className="inline-flex items-center gap-3 px-10 py-5 bg-white text-indigo-950 hover:bg-slate-50 font-bold rounded-2xl shadow-2xl transition-all text-xl group"
+            >
+              Generate my emails now
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </AnimatedReveal>
         </div>
       </section>
 
       {/* 10. FOOTER */}
-      <footer className="pt-16 pb-8 px-6 bg-[#0f172a] border-t border-slate-900 text-slate-500 text-sm">
+      <footer className="pt-20 pb-10 px-6 bg-[#0b1121] border-t border-white/5 text-slate-500 text-sm">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-            
-            <div className="space-y-4 md:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded bg-[#6366f1] flex items-center justify-center text-white font-bold text-xl">
-                  E
+            <div className="space-y-6 md:col-span-1">
+              <div className="flex items-center gap-3 group">
+                <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-600/20 group-hover:shadow-indigo-600/40 transition-shadow">
+                  <LogoIcon className="w-6 h-6" />
                 </div>
-                <span className="text-xl font-bold text-white tracking-tight">
+                <span className="text-2xl font-bold text-white tracking-tight">
                   Designmails
                 </span>
               </div>
-              <p className="text-slate-400">
+              <p className="text-slate-400 text-base leading-relaxed">
                 The AI Onboarding Email Builder for early-stage SaaS.
               </p>
             </div>
 
-            <div>
-              <h4 className="font-semibold text-white mb-4 uppercase tracking-wider text-xs">Product</h4>
-              <ul className="space-y-3">
+            <div className="md:col-start-2">
+              <h4 className="font-semibold text-white mb-6 uppercase tracking-wider text-xs">Product</h4>
+              <ul className="space-y-4 text-base">
                 <li><Link href="#features" className="hover:text-white transition-colors">Features</Link></li>
                 <li><Link href="#how-it-works" className="hover:text-white transition-colors">How it works</Link></li>
                 <li><Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link></li>
@@ -437,27 +430,28 @@ export default async function Home() {
             </div>
 
             <div>
-              <h4 className="font-semibold text-white mb-4 uppercase tracking-wider text-xs">Legal</h4>
-              <ul className="space-y-3">
-                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
+              <h4 className="font-semibold text-white mb-6 uppercase tracking-wider text-xs">Support</h4>
+              <ul className="space-y-4 text-base">
+                <li><a href="mailto:support@designmails.com" className="hover:text-white transition-colors">Contact Support</a></li>
               </ul>
             </div>
 
             <div>
-              {/* Empty 4th column as requested */}
+              <h4 className="font-semibold text-white mb-6 uppercase tracking-wider text-xs">Legal</h4>
+              <ul className="space-y-4 text-base">
+                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
+              </ul>
             </div>
-            
           </div>
 
-          <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p>
-              &copy; {new Date().getFullYear()} Designmails. Made with ❤️ in India. Built for SaaS founders who ship fast.
+          <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-slate-500">
+              &copy; {new Date().getFullYear()} Designmails. Made with ❤️ in India.
             </p>
           </div>
         </div>
       </footer>
-
     </div>
   );
 }

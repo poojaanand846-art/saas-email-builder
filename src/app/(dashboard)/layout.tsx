@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import LogoIcon from "@/app/components/LogoIcon";
 
 export default function DashboardLayout({
   children,
@@ -74,30 +75,28 @@ export default function DashboardLayout({
     <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
       
       {/* Sidebar Navigation */}
-      <aside className="w-64 bg-slate-900/60 backdrop-blur-xl border-r border-slate-900 flex flex-col fixed inset-y-0 left-0 z-30">
+      <aside className="w-64 bg-neutral-950 border-r border-white/5 flex flex-col fixed inset-y-0 left-0 z-30">
         
         {/* Logo/Branding */}
-        <div className="p-6 border-b border-slate-950 flex items-center gap-3">
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white shadow-md shadow-indigo-600/20">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 19v-8.93a2 2 0 01.89-1.664l8-5.333a2 2 0 012.22 0l8 5.333A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2" />
-            </svg>
+        <Link href="/" className="p-6 border-b border-white/5 flex items-center gap-3 group">
+          <div className="w-8 h-8 rounded bg-white flex items-center justify-center text-black">
+            <LogoIcon className="w-4 h-4" />
           </div>
-          <span className="font-bold text-white tracking-wide text-base">Email Builder</span>
-        </div>
+          <span className="font-semibold text-white tracking-wide text-sm">Designmails</span>
+        </Link>
 
         {/* Navigation Links */}
-        <nav className="flex-grow p-4 space-y-1.5">
+        <nav className="flex-grow p-4 space-y-1">
           {links.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = pathname === link.href || pathname.startsWith(link.href + "/");
             return (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                   isActive
-                    ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/10"
-                    : "text-slate-400 hover:text-white hover:bg-slate-900"
+                    ? "bg-white/10 text-white"
+                    : "text-neutral-400 hover:text-white hover:bg-white/5"
                 }`}
               >
                 {link.icon}
@@ -108,20 +107,31 @@ export default function DashboardLayout({
         </nav>
 
         {/* User profile / Sign Out */}
-        <div className="p-4 border-t border-slate-950 space-y-3">
+        <div className="p-4 border-t border-white/5 space-y-2">
           {userEmail && (
-            <div className="px-3 py-2 bg-slate-950/40 rounded-xl border border-slate-900/50">
-              <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+            <div className="px-3 py-2 bg-neutral-900/50 rounded-lg border border-white/5">
+              <span className="block text-[10px] font-medium uppercase tracking-wider text-neutral-500">
                 Logged in as
               </span>
-              <span className="block text-xs font-medium text-slate-300 truncate mt-0.5" title={userEmail}>
+              <span className="block text-xs font-medium text-neutral-300 truncate mt-0.5" title={userEmail}>
                 {userEmail}
               </span>
             </div>
           )}
+          
+          <a
+            href="mailto:support@designmails.com"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 font-medium text-sm transition-all"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <span>Contact Support</span>
+          </a>
+
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-900 hover:bg-rose-950/20 hover:border-rose-900/30 hover:text-rose-400 text-slate-400 font-medium text-sm transition-all"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 font-medium text-sm transition-all"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -133,15 +143,9 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-grow pl-64 min-h-screen">
-        <div className="min-h-screen relative overflow-hidden bg-slate-950">
-          {/* Subtle Backlight glow */}
-          <div className="absolute top-[-10%] left-[-5%] w-[50%] h-[50%] rounded-full bg-indigo-500/5 blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-[-10%] right-[-5%] w-[50%] h-[50%] rounded-full bg-purple-500/5 blur-[120px] pointer-events-none" />
-          
-          <div className="relative z-10">
-            {children}
-          </div>
+      <main className="flex-grow pl-64 min-h-screen bg-[#0A0A0A]">
+        <div className="relative z-10">
+          {children}
         </div>
       </main>
 

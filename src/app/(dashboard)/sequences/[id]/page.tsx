@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ExportButton from "./ExportButton";
+import SaveAsTemplateButton from "./SaveAsTemplateButton";
+import { TEMPLATES } from "@/lib/templates";
 
 export default async function SequenceDetailPage({
   params,
@@ -27,7 +29,8 @@ export default async function SequenceDetailPage({
       name,
       status,
       tone,
-      created_at
+      created_at,
+      template_id
     `)
     .eq("id", params.id)
     .eq("user_id", user.id)
@@ -37,12 +40,41 @@ export default async function SequenceDetailPage({
     notFound();
   }
 
+  // Retrieve workspace plan to check for Pro status
+  const { data: workspace } = await supabase
+    .from("workspaces")
+    .select("plan")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  const isPro = workspace?.plan === 'pro';
+
   // Retrieve email steps sorted by position
   const { data: emails } = await supabase
     .from("emails")
     .select("id, day_offset, subject, preview_text, position")
     .eq("sequence_id", params.id)
     .order("position", { ascending: true });
+
+  let parentTemplate = sequence.template_id 
+    ? TEMPLATES.find(t => t.id === sequence.template_id)
+    : null;
+
+  if (sequence.template_id && !parentTemplate) {
+    const { data: userTemplate } = await supabase
+      .from("user_templates")
+      .select("name")
+      .eq("id", sequence.template_id)
+      .maybeSingle();
+    
+    if (userTemplate) {
+      parentTemplate = {
+        id: sequence.template_id,
+        name: userTemplate.name,
+        // Mocking the rest for the badge since we only need id and name
+      } as any;
+    }
+  }
 
   return (
     <div className="p-8 max-w-5xl mx-auto space-y-8">
@@ -72,9 +104,24 @@ export default async function SequenceDetailPage({
                 {sequence.status}
               </span>
             </div>
+            {parentTemplate && (
+              <div className="mt-3">
+                <Link href={`/templates?filter=${encodeURIComponent(parentTemplate.name)}`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 hover:text-indigo-200 hover:bg-indigo-500/20 transition-colors text-xs font-medium">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                  Based on: {parentTemplate.name}
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-3">
+            <SaveAsTemplateButton 
+              sequenceId={sequence.id}
+              sequenceName={sequence.name}
+              isPro={isPro}
+            />
             <ExportButton
               sequenceId={sequence.id}
               sequenceName={sequence.name}

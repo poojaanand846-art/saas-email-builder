@@ -22,7 +22,7 @@ const onboardingSchema = z.object({
     .string()
     .min(20, "Description must be at least 20 characters.")
     .max(500, "Description must be under 500 characters."),
-  primaryColor: z.string().regex(/^#[0-9a-fA-F]{6}$/, "Invalid color format."),
+  primaryColor: z.string().regex(/^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/, "Invalid color format. Use hex (e.g. #6366f1)"),
 });
 
 type OnboardingData = z.infer<typeof onboardingSchema>;
@@ -70,13 +70,26 @@ export default function OnboardingPage() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    
+    // Prevent submission if not on step 3
+    if (step !== 3) {
+      handleNextStep();
+      return;
+    }
+
     setValidationError(null);
     setErrorMsg(null);
 
+    // Format color before validation
+    const formattedData = { ...formData };
+    if (!formattedData.primaryColor.startsWith("#")) {
+      formattedData.primaryColor = `#${formattedData.primaryColor}`;
+    }
+
     // Validate all fields
-    const validationResult = onboardingSchema.safeParse(formData);
+    const validationResult = onboardingSchema.safeParse(formattedData);
     if (!validationResult.success) {
       setValidationError(validationResult.error.issues[0].message);
       return;
@@ -90,7 +103,7 @@ export default function OnboardingPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formattedData),
       });
 
       const data = await res.json();
@@ -101,11 +114,16 @@ export default function OnboardingPage() {
 
       // Force refreshing the router to update middleware redirects
       router.refresh();
-      router.push("/dashboard");
+      router.push("/templates");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Submission failed.");
       setIsSubmitting(false);
     }
+  };
+
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setFormData({ ...formData, primaryColor: val });
   };
 
   const descRemainingChars = 500 - formData.productDescription.length;
@@ -195,10 +213,16 @@ export default function OnboardingPage() {
               <input
                 id="brandName"
                 type="text"
-                required
+                autoFocus
                 placeholder="e.g. Notion, Stripe, Figma"
                 value={formData.brandName}
                 onChange={(e) => setFormData({ ...formData, brandName: e.target.value })}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleNextStep();
+                  }
+                }}
                 className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
               />
             </div>
@@ -217,7 +241,7 @@ export default function OnboardingPage() {
               </div>
               <textarea
                 id="productDescription"
-                required
+                autoFocus
                 rows={4}
                 placeholder="e.g. We help freelancers manage invoices and clients in one place"
                 value={formData.productDescription}
@@ -235,18 +259,29 @@ export default function OnboardingPage() {
                   Pick your primary brand color
                 </label>
                 <div className="flex items-center gap-4">
-                  <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-slate-800/80 cursor-pointer flex items-center justify-center bg-slate-950">
+                  <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-slate-800/80 cursor-pointer flex items-center justify-center bg-slate-950 shrink-0">
                     <input
-                      id="primaryColor"
+                      id="primaryColorPicker"
                       type="color"
-                      value={formData.primaryColor}
-                      onChange={(e) => setFormData({ ...formData, primaryColor: e.target.value })}
+                      value={formData.primaryColor.startsWith("#") ? formData.primaryColor.slice(0, 7) : "#000000"}
+                      onChange={handleColorChange}
                       className="absolute inset-[-10px] w-[200%] h-[200%] cursor-pointer border-none p-0"
                     />
                   </div>
-                  <span className="text-sm font-mono text-slate-300 uppercase select-all">
-                    {formData.primaryColor}
-                  </span>
+                  <input
+                    id="primaryColorText"
+                    type="text"
+                    value={formData.primaryColor}
+                    onChange={handleColorChange}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        handleSubmit();
+                      }
+                    }}
+                    placeholder="#6366f1"
+                    className="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-white font-mono placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
+                  />
                 </div>
               </div>
 
@@ -257,7 +292,7 @@ export default function OnboardingPage() {
                 </span>
                 <button
                   type="button"
-                  style={{ backgroundColor: formData.primaryColor }}
+                  style={{ backgroundColor: formData.primaryColor.startsWith("#") ? formData.primaryColor : `#${formData.primaryColor}` }}
                   className="px-6 py-2.5 rounded-lg text-white font-medium shadow-lg shadow-black/10 hover:brightness-110 active:brightness-95 transition-all text-sm"
                 >
                   Send Newsletter

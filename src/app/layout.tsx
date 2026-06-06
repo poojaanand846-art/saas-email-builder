@@ -14,10 +14,10 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "SaaS Email Builder — AI onboarding emails in 60 seconds",
+  title: "Designmails — AI onboarding emails in 60 seconds",
   description: "Describe your SaaS and get 7 AI-written onboarding emails instantly. Export HTML or connect your ESP.",
   openGraph: {
-    title: "SaaS Email Builder — AI onboarding emails in 60 seconds",
+    title: "Designmails — AI onboarding emails in 60 seconds",
     description: "Describe your SaaS and get 7 AI-written onboarding emails instantly. Export HTML or connect your ESP.",
     type: "website",
   },
