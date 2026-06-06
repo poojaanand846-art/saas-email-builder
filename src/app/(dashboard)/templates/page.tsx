@@ -54,7 +54,7 @@ export default function TemplatesPage() {
   return (
     <div className="p-8 max-w-6xl mx-auto space-y-8">
       {/* Header */}
-      <header className="space-y-6">
+      <header className="space-y-6 border-b border-white/10 pb-6">
         <div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight">
             Start from a template
@@ -62,19 +62,6 @@ export default function TemplatesPage() {
           <p className="text-sm text-slate-400 mt-2">
             Pick a template, customise it to your brand, and generate in seconds
           </p>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex items-center gap-4 border-b border-white/10 pb-px">
-          <div className="pb-2 border-b-2 border-white text-white font-medium text-sm">
-            Templates
-          </div>
-          <Link
-            href="/generate"
-            className="pb-2 border-b-2 border-transparent text-neutral-500 hover:text-neutral-300 font-medium text-sm transition-colors"
-          >
-            Start from scratch
-          </Link>
         </div>
       </header>
 
