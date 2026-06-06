@@ -85,8 +85,8 @@ export default function TemplatesPage() {
             onClick={() => setActiveFilter(filter)}
             className={`whitespace-nowrap px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               activeFilter === filter
-                ? "bg-white text-black"
-                : "bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white"
+                ? "bg-white text-indigo-950 shadow-[0_0_15px_rgba(255,255,255,0.15)]"
+                : "bg-white/5 text-neutral-400 hover:bg-white/10 hover:text-white border border-transparent hover:border-white/10"
             }`}
           >
             {filter}
@@ -189,9 +189,10 @@ export default function TemplatesPage() {
           {filteredTemplates.map((template) => (
             <div
               key={template.id}
-              className="bg-neutral-900/30 border border-white/5 rounded-xl p-5 flex flex-col hover:bg-neutral-900/60 hover:border-white/10 transition-all duration-200"
+              className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-5 flex flex-col hover:bg-slate-800/80 hover:border-indigo-500/30 transition-all duration-300 group relative overflow-hidden"
             >
-              <div className="flex flex-col flex-1 space-y-4">
+              <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/5 to-violet-500/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none" />
+              <div className="flex flex-col flex-1 space-y-4 relative z-10">
                 <div className="flex items-start justify-between gap-4">
                   <h3 className="font-semibold text-white text-base leading-tight">
                     {template.name}
@@ -250,13 +251,13 @@ export default function TemplatesPage() {
               <div className="flex items-center gap-3 pt-5 mt-5 border-t border-white/5">
                 <button 
                   onClick={() => setPreviewTemplate(template)}
-                  className="flex-1 px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 text-neutral-300 font-medium text-sm transition-all"
+                  className="flex-1 px-4 py-2.5 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 hover:text-white font-medium text-sm transition-all"
                 >
                   Preview
                 </button>
                 <Link
                   href={`/generate?template=${template.id}`}
-                  className="flex-1 px-4 py-2 rounded-lg bg-white hover:bg-neutral-200 text-black font-medium text-sm text-center transition-all"
+                  className="flex-1 px-4 py-2.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white font-medium text-sm text-center transition-colors border border-indigo-500/30 hover:border-indigo-500 shadow-lg shadow-indigo-500/10"
                 >
                   Use template
                 </Link>

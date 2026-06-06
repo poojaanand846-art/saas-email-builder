@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import Navbar from "./components/Navbar";
 import FaqAccordion from "./components/FaqAccordion";
@@ -12,13 +11,10 @@ import { Sparkles, Zap, Shield, Mail, Layout, Eye, ArrowRight, CheckCircle2, Cop
 export default async function Home() {
   const supabase = createClient();
 
+  let user = null;
   try {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      redirect("/dashboard");
-    }
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
   } catch {
     // Session fetching failed or not available during build. Let it render.
   }
@@ -57,13 +53,23 @@ export default async function Home() {
 
           <AnimatedReveal delay={0.4}>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
-              <Link
-                href="/login"
-                className="w-full sm:w-auto px-8 py-3.5 bg-white text-black hover:bg-slate-200 font-medium rounded-xl transition-all text-base flex items-center justify-center gap-2 group shadow-[0_0_40px_rgba(255,255,255,0.1)]"
-              >
-                Generate my emails free
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              {user ? (
+                <Link
+                  href="/dashboard"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-white text-black hover:bg-slate-200 font-medium rounded-xl transition-all text-base flex items-center justify-center gap-2 group shadow-[0_0_40px_rgba(255,255,255,0.1)]"
+                >
+                  Go to account
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-white text-black hover:bg-slate-200 font-medium rounded-xl transition-all text-base flex items-center justify-center gap-2 group shadow-[0_0_40px_rgba(255,255,255,0.1)]"
+                >
+                  Generate my emails free
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              )}
               <Link
                 href="#how-it-works"
                 className="w-full sm:w-auto px-8 py-3.5 bg-transparent hover:bg-white/5 border border-white/10 text-white font-medium rounded-xl backdrop-blur-md transition-all text-base"
@@ -390,13 +396,23 @@ export default async function Home() {
             <p className="text-xl md:text-2xl text-indigo-100/90 mb-12 max-w-2xl mx-auto font-light">
               Join SaaS founders who stopped guessing and started converting.
             </p>
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-3 px-10 py-5 bg-white text-indigo-950 hover:bg-slate-50 font-bold rounded-2xl shadow-2xl transition-all text-xl group"
-            >
-              Generate my emails now
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            {user ? (
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center gap-3 px-10 py-5 bg-white text-indigo-950 hover:bg-slate-50 font-bold rounded-2xl shadow-2xl transition-all text-xl group"
+              >
+                Go to account
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="inline-flex items-center gap-3 px-10 py-5 bg-white text-indigo-950 hover:bg-slate-50 font-bold rounded-2xl shadow-2xl transition-all text-xl group"
+              >
+                Generate my emails now
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            )}
           </AnimatedReveal>
         </div>
       </section>

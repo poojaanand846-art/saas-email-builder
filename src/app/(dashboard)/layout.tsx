@@ -92,10 +92,14 @@ export default function DashboardLayout({
   ];
 
   return (
-    <div className="flex min-h-screen bg-slate-950 text-slate-100 font-sans">
+    <div className="flex min-h-screen bg-[#09090b] text-slate-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
+      
+      {/* Subtle Background Elements (matching landing page) */}
+      <div className="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none z-0" />
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-64 bg-indigo-500/10 rounded-[100%] blur-[120px] pointer-events-none z-0" />
       
       {/* Sidebar Navigation */}
-      <aside className="w-64 bg-neutral-950 border-r border-white/5 flex flex-col fixed inset-y-0 left-0 z-30">
+      <aside className="w-64 bg-[#0b1121]/95 backdrop-blur-xl border-r border-slate-800 flex flex-col fixed inset-y-0 left-0 z-30 shadow-2xl shadow-black/50">
         
         {/* Logo/Branding */}
         <Link href="/" className="p-6 border-b border-white/5 flex items-center gap-3 group">
@@ -130,8 +134,8 @@ export default function DashboardLayout({
                 href={link.href}
                 className={`flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                   isActive
-                    ? "bg-white/10 text-white"
-                    : "text-neutral-400 hover:text-white hover:bg-white/5"
+                    ? "bg-indigo-500/15 text-indigo-300 border border-indigo-500/20 shadow-inner"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/80"
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -146,7 +150,7 @@ export default function DashboardLayout({
         {/* User profile / Sign Out */}
         <div className="p-4 border-t border-white/5 space-y-2">
           {userEmail && (
-            <div className="px-3 py-2 bg-neutral-900/50 rounded-lg border border-white/5">
+            <div className="px-3 py-2 bg-slate-900/80 rounded-lg border border-slate-800 shadow-inner">
               <span className="block text-[10px] font-medium uppercase tracking-wider text-neutral-500">
                 Logged in as
               </span>
@@ -155,10 +159,9 @@ export default function DashboardLayout({
               </span>
             </div>
           )}
-          
           <a
             href="mailto:support@designmails.com"
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 font-medium text-sm transition-all"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 font-medium text-sm transition-all"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -168,7 +171,7 @@ export default function DashboardLayout({
 
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 font-medium text-sm transition-all"
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 font-medium text-sm transition-all"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -180,7 +183,7 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-grow pl-64 min-h-screen bg-[#0A0A0A]">
+      <main className="flex-grow pl-64 min-h-screen relative z-10">
         <div className="relative z-10">
           {children}
         </div>

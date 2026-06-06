@@ -167,7 +167,7 @@ export default function EditorForm({ email }: EditorFormProps) {
   `;
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col relative text-slate-100 font-sans">
+    <div className="min-h-screen bg-[#09090b] flex flex-col relative text-slate-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
       
       {/* Toast Notification */}
       {toast.show && (
@@ -190,7 +190,7 @@ export default function EditorForm({ email }: EditorFormProps) {
       )}
 
       {/* Editor Header / Navbar */}
-      <header className="h-16 border-b border-slate-900 bg-slate-950/80 backdrop-blur-md flex items-center justify-between px-6 shrink-0">
+      <header className="h-16 border-b border-slate-800 bg-[#09090b]/80 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-20">
         <div className="flex items-center gap-4">
           <Link
             href={`/sequences/${email.sequence_id}`}
@@ -222,7 +222,7 @@ export default function EditorForm({ email }: EditorFormProps) {
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all flex items-center gap-2 disabled:opacity-50"
+            className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] transition-all flex items-center gap-2 disabled:opacity-50"
           >
             {isSaving ? (
               <>
@@ -243,7 +243,7 @@ export default function EditorForm({ email }: EditorFormProps) {
       <main className="flex-grow flex flex-col lg:flex-row overflow-hidden">
         
         {/* Left Form Editor */}
-        <section className="w-full lg:w-1/2 flex flex-col p-6 overflow-y-auto border-r border-slate-900 space-y-6">
+        <section className="w-full lg:w-1/2 flex flex-col p-6 overflow-y-auto border-r border-slate-800 space-y-6 relative z-10">
           <div className="space-y-1">
             <h2 className="text-lg font-bold text-white">Edit Campaign Step</h2>
             <p className="text-slate-400 text-xs">Update your onboarding copy, subject lines, and preview headers below.</p>
@@ -256,7 +256,7 @@ export default function EditorForm({ email }: EditorFormProps) {
               <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                 Sequence Offset
               </label>
-              <div className="w-full bg-slate-900/45 border border-slate-900 rounded-xl px-4 py-3 text-slate-400 font-medium text-sm flex items-center gap-2 select-none">
+              <div className="w-full bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-xl px-4 py-3 text-slate-400 font-medium text-sm flex items-center gap-2 select-none">
                 <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -284,7 +284,7 @@ export default function EditorForm({ email }: EditorFormProps) {
                 placeholder="Welcome to our platform!"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500/80 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/10 transition-all font-medium"
+                className="w-full bg-[#0A0A0A] border border-slate-800 focus:border-indigo-500/80 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-medium"
               />
             </div>
 
@@ -307,7 +307,7 @@ export default function EditorForm({ email }: EditorFormProps) {
                 placeholder="Get started with your free trial inside..."
                 value={previewText}
                 onChange={(e) => setPreviewText(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500/80 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/10 transition-all text-sm"
+                className="w-full bg-[#0A0A0A] border border-slate-800 focus:border-indigo-500/80 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all text-sm"
               />
             </div>
 
@@ -322,7 +322,7 @@ export default function EditorForm({ email }: EditorFormProps) {
                   required
                   value={bodyHtml}
                   onChange={(e) => setBodyHtml(e.target.value)}
-                  className="w-full flex-grow bg-slate-950 border border-slate-800 focus:border-indigo-500/80 rounded-xl p-4 text-slate-300 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/10 transition-all font-mono text-sm leading-relaxed resize-none"
+                  className="w-full flex-grow bg-[#0A0A0A] border border-slate-800 focus:border-indigo-500/80 rounded-xl p-4 text-slate-300 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all font-mono text-sm leading-relaxed resize-none"
                   placeholder="<p>Hello world!</p>"
                 />
               </div>
@@ -332,17 +332,17 @@ export default function EditorForm({ email }: EditorFormProps) {
         </section>
 
         {/* Right Live Preview Panel */}
-        <section className="w-full lg:w-1/2 flex flex-col bg-slate-905/30 p-6 overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-900">
+        <section className="w-full lg:w-1/2 flex flex-col bg-[#0b1121]/50 p-6 overflow-hidden border-t lg:border-t-0 lg:border-l border-slate-800 relative z-10">
           
           {/* Preview Toolbar */}
-          <div className="flex items-center justify-between pb-4 border-b border-slate-900 shrink-0">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-800 shrink-0">
             <div className="flex items-center gap-2">
               <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse" />
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Live Preview</span>
             </div>
 
             {/* Desktop / Mobile viewports switcher */}
-            <div className="bg-slate-950 border border-slate-800 rounded-lg p-1 flex items-center gap-1">
+            <div className="bg-[#0A0A0A] border border-slate-800 rounded-lg p-1 flex items-center gap-1">
               <button
                 type="button"
                 onClick={() => setViewportMode("desktop")}
@@ -380,7 +380,7 @@ export default function EditorForm({ email }: EditorFormProps) {
               className={`w-full h-full transition-all duration-300 flex items-center justify-center ${
                 viewportMode === "mobile"
                   ? "max-w-[375px] max-h-[660px] border-8 border-slate-800 rounded-3xl overflow-hidden shadow-2xl relative bg-white"
-                  : "w-full rounded-2xl overflow-hidden shadow-xl border border-slate-900 bg-white"
+                  : "w-full rounded-2xl overflow-hidden shadow-xl border border-slate-800 bg-white"
               }`}
             >
               {/* If Mobile, draw simple mock header */}

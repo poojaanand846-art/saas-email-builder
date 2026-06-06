@@ -140,7 +140,7 @@ export default function PasswordSettingsPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={8}
-                className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-white placeholder-slate-500"
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/50 outline-none transition-all text-white placeholder-slate-500"
                 placeholder="••••••••"
               />
               
@@ -185,7 +185,7 @@ export default function PasswordSettingsPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 minLength={8}
-                className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-white placeholder-slate-500"
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-slate-800 rounded-xl focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500/50 outline-none transition-all text-white placeholder-slate-500"
                 placeholder="••••••••"
               />
             </div>
@@ -194,7 +194,7 @@ export default function PasswordSettingsPage() {
               <button
                 type="submit"
                 disabled={isSaving || !password || !confirmPassword || password !== confirmPassword || strength.score < 4}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:hover:bg-indigo-600 text-white font-medium rounded-xl transition-all w-full sm:w-auto min-w-[180px]"
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] disabled:opacity-50 disabled:hover:bg-indigo-600 text-white font-medium rounded-xl transition-all w-full sm:w-auto min-w-[180px]"
               >
                 {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : (
                   <>
@@ -211,7 +211,7 @@ export default function PasswordSettingsPage() {
       {/* Active Sessions Section */}
       <div>
         <h3 className="text-lg font-semibold text-white mb-4">Active Sessions</h3>
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">

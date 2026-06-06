@@ -409,7 +409,7 @@ function GenerateSequenceContent() {
 
   if (isLoadingWorkspace) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0A0A0A]">
+      <div className="min-h-screen flex items-center justify-center bg-transparent">
         <div className="flex flex-col items-center gap-3">
           <svg className="animate-spin h-6 w-6 text-white/50" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -424,10 +424,10 @@ function GenerateSequenceContent() {
   const enabledEmails = wizardData.emails.filter(e => e.enabled);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] px-4 sm:px-6 py-8 md:p-12 text-white font-sans relative">
+    <div className="min-h-screen bg-transparent px-4 sm:px-6 py-8 md:p-12 text-white font-sans relative">
       {/* Generation Loading State Overlay */}
       {isGenerating && (
-        <div className="fixed inset-0 bg-[#0A0A0A]/80 backdrop-blur-md flex flex-col items-center justify-center z-50 animate-fade-in">
+        <div className="fixed inset-0 bg-[#09090b]/80 backdrop-blur-md flex flex-col items-center justify-center z-50 animate-fade-in">
           <div className="text-center space-y-6 max-w-sm px-4">
             <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
               <svg className="animate-spin h-8 w-8 text-white" fill="none" viewBox="0 0 24 24">
@@ -482,13 +482,13 @@ function GenerateSequenceContent() {
               {[1, 2, 3, 4].map(step => (
                 <div key={step} className="flex items-center">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
-                    currentStep === step ? "bg-white text-black" : 
-                    currentStep > step ? "bg-white/20 text-white" : "bg-neutral-900 text-neutral-500 border border-white/5"
+                    currentStep === step ? "bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]" : 
+                    currentStep > step ? "bg-indigo-600/30 text-indigo-200" : "bg-slate-900 text-slate-500 border border-slate-800"
                   }`}>
                     {step}
                   </div>
                   {step < 4 && (
-                    <div className={`w-8 h-px mx-2 ${currentStep > step ? "bg-white/20" : "bg-neutral-900"}`}></div>
+                    <div className={`w-8 h-px mx-2 ${currentStep > step ? "bg-indigo-500/50" : "bg-slate-800"}`}></div>
                   )}
                 </div>
               ))}
@@ -522,8 +522,8 @@ function GenerateSequenceContent() {
                   }}
                   className={`p-6 rounded-xl border text-left transition-all ${
                     wizardData.goal === goal 
-                      ? "bg-white/10 border-white text-white" 
-                      : "bg-neutral-900/30 border-white/5 text-neutral-300 hover:bg-neutral-900/60 hover:border-white/20"
+                      ? "bg-indigo-600/20 border-indigo-500 text-indigo-100 shadow-[0_0_15px_rgba(99,102,241,0.2)]" 
+                      : "bg-slate-900/80 backdrop-blur-sm border-slate-800 text-slate-300 hover:bg-slate-800/80 hover:border-indigo-500/30"
                   }`}
                 >
                   <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mb-4">
@@ -567,9 +567,9 @@ function GenerateSequenceContent() {
               )}
             </div>
 
-            <div className="space-y-3 bg-neutral-900/30 border border-white/5 rounded-xl p-6">
+            <div className="space-y-3 bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
               {wizardData.emails.map((email, idx) => (
-                <div key={idx} className={`flex items-center gap-4 p-4 rounded-lg border transition-all ${email.enabled ? "bg-[#0A0A0A] border-white/10" : "bg-transparent border-transparent opacity-50"}`}>
+                <div key={idx} className={`flex items-center gap-4 p-4 rounded-lg border transition-all ${email.enabled ? "bg-[#0A0A0A]/50 border-slate-700" : "bg-transparent border-transparent opacity-50"}`}>
                   <button onClick={() => handleToggleEmail(idx)} className="text-neutral-400 hover:text-white transition-colors">
                     {email.enabled ? (
                       <svg className="w-6 h-6 text-indigo-400" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg>
@@ -656,7 +656,7 @@ function GenerateSequenceContent() {
                       key={originalIndex} 
                       onClick={() => setActivePreviewIndex(originalIndex)}
                       className={`p-4 rounded-xl border cursor-pointer transition-all ${
-                        isActive ? "bg-white/5 border-white/30" : "bg-neutral-900/30 border-white/5 hover:border-white/10"
+                        isActive ? "bg-indigo-600/20 border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.2)]" : "bg-slate-900/80 backdrop-blur-sm border-slate-800 hover:border-indigo-500/30"
                       }`}
                     >
                       <div className="flex items-center justify-between mb-3">
@@ -682,7 +682,7 @@ function GenerateSequenceContent() {
                 })}
               </div>
 
-              <div className="lg:col-span-3 bg-neutral-900/30 border border-white/5 rounded-2xl p-8 flex flex-col items-center justify-center min-h-[400px]">
+              <div className="lg:col-span-3 bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-8 flex flex-col items-center justify-center min-h-[400px]">
                 {wizardData.emails[activePreviewIndex] ? (
                   <div className="w-full max-w-sm bg-white border border-neutral-200 rounded-xl shadow-sm overflow-hidden">
                     <div className="h-1.5 w-full bg-indigo-500"></div>
@@ -723,7 +723,7 @@ function GenerateSequenceContent() {
               <p className="text-sm text-neutral-400">Provide the context AI needs to write the copy.</p>
             </div>
 
-            <div className="bg-neutral-900/30 border border-white/5 rounded-xl p-6 space-y-6">
+            <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-xl p-6 space-y-6">
               <div className="space-y-2">
                 <label htmlFor="sequenceName" className="block text-sm font-medium text-neutral-300">
                   Sequence Name
@@ -766,8 +766,8 @@ function GenerateSequenceContent() {
                       onClick={() => setWizardData({ ...wizardData, tone: t })}
                       className={`py-2 rounded-lg border text-sm font-medium capitalize transition-all ${
                         wizardData.tone === t
-                          ? "bg-white text-black border-white"
-                          : "bg-[#0A0A0A] border-white/10 text-neutral-400 hover:text-white hover:border-white/30"
+                          ? "bg-indigo-600/20 border-indigo-500 text-indigo-100 shadow-[0_0_15px_rgba(99,102,241,0.2)]"
+                          : "bg-slate-900/80 border-slate-800 text-slate-400 hover:text-white hover:border-indigo-500/30"
                       }`}
                     >
                       {t}

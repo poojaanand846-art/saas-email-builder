@@ -56,7 +56,7 @@ export default async function DashboardPage() {
     <div className="p-8 max-w-6xl mx-auto space-y-8">
       
       {/* Header Section */}
-      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-slate-900">
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-white/5 relative z-10">
         <div>
           <h1 className="text-3xl font-extrabold text-white tracking-tight">
             {brandName} Workspace
@@ -74,7 +74,7 @@ export default async function DashboardPage() {
           </Link>
           <Link
             href="/generate"
-            className="px-4 py-2 rounded-lg bg-white hover:bg-neutral-200 text-black font-medium text-sm transition-all flex items-center gap-2"
+            className="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-200 text-indigo-950 font-bold text-sm transition-all flex items-center gap-2 shadow-[0_0_30px_rgba(255,255,255,0.1)]"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -96,8 +96,8 @@ export default async function DashboardPage() {
       {!sequences || sequences.length === 0 ? (
         
         /* Empty State */
-        <div className="space-y-8 animate-fade-in pt-4">
-          <div className="bg-indigo-600/10 border border-indigo-500/20 rounded-2xl p-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="space-y-8 animate-fade-in pt-4 relative z-10">
+          <div className="bg-gradient-to-r from-indigo-500/10 to-violet-500/10 border border-indigo-500/20 rounded-3xl p-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6 backdrop-blur-md">
             <div>
               <h2 className="text-2xl font-bold text-white tracking-tight">
                 Welcome to Designmails, <span className="capitalize">{firstName}</span>
@@ -112,7 +112,7 @@ export default async function DashboardPage() {
             {featuredTemplates.map((template) => (
               <div
                 key={template.id}
-                className="bg-neutral-900/30 border border-white/5 rounded-xl p-5 flex flex-col hover:bg-neutral-900/60 hover:border-white/10 transition-all duration-200"
+                className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-5 flex flex-col hover:bg-slate-800/80 hover:border-indigo-500/30 transition-all duration-300 group"
               >
                 <div className="flex flex-col flex-1 space-y-4">
                   <h3 className="font-semibold text-white text-base leading-tight">
@@ -148,7 +148,7 @@ export default async function DashboardPage() {
                 <div className="pt-5 mt-5 border-t border-white/5">
                   <Link
                     href={`/generate?template=${template.id}`}
-                    className="block w-full px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm text-center transition-all"
+                    className="block w-full px-4 py-2.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600 text-indigo-300 hover:text-white font-medium text-sm text-center transition-colors border border-indigo-500/30 hover:border-indigo-500"
                   >
                     Use template
                   </Link>
@@ -185,8 +185,9 @@ export default async function DashboardPage() {
               return (
                 <div
                   key={seq.id}
-                  className="bg-neutral-900/30 border border-white/5 rounded-xl p-5 flex flex-col justify-between hover:bg-neutral-900/60 hover:border-white/10 transition-all duration-200 group"
+                  className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-5 flex flex-col justify-between hover:bg-slate-800/80 hover:border-indigo-500/30 transition-all duration-300 group relative overflow-hidden"
                 >
+                  <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/5 to-violet-500/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none" />
                   <div className="space-y-3">
                     <div className="flex items-start justify-between gap-4">
                       <h3 className="font-semibold text-white group-hover:text-neutral-300 transition-colors line-clamp-1 text-sm">
