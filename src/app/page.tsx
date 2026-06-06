@@ -35,7 +35,7 @@ export default async function Home() {
           <AnimatedReveal delay={0.1}>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-slate-300 font-medium text-xs tracking-wide mb-8 backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-              Powered by Gemini 1.5 AI
+              Powered by AI
             </div>
           </AnimatedReveal>
           
@@ -155,7 +155,7 @@ export default async function Home() {
               {
                 step: "02",
                 title: "AI writes your full sequence",
-                desc: "Gemini AI generates 7 professionally written onboarding emails — tailored to your product. Subject lines, preview text, and full email body. Done in under 60 seconds."
+                desc: "AI generates 7 professionally written onboarding emails — tailored to your product. Subject lines, preview text, and full email body. Done in under 60 seconds."
               },
               {
                 step: "03",
@@ -234,7 +234,7 @@ export default async function Home() {
             <AnimatedReveal delay={0.1}>
               <FeatureCard 
                 title="AI-generated copy" 
-                description="Powered by Gemini 1.5 Pro to write persuasive, natural-sounding emails that don't feel like a robot wrote them."
+                description="Powered by AI to write persuasive, natural-sounding emails that don't feel like a robot wrote them."
                 icon={<Sparkles className="w-6 h-6" />}
                 className="h-full"
               />
